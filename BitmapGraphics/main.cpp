@@ -1,33 +1,26 @@
 #include<iostream>
 #include<string>
+#include<vector>
 #include "visitor.hpp"
 #include "session.hpp"
-// class CommandHandler
-// {
-//     std::string rawCommand;
-//     std::string* commandArguments;
-//     std::size_t commandArgumentsSize;
-
-//     std::string filename;
-//     CommandHandler(std::string _commandName, std::stirng _filename) : commandName(_commandName), filename(_filename) {}
-//     void readCommand()
-//     {
-//         std::getline(std::cin, rawCommand);
-//         for(int i=0; i<strlen(rawCommand); i++)
-//         {
-//             if(rawCommand[i] == ' ') 
-//                 commandArgumentsSize++;
-//         }
-        
-
-//     }
-// };
+#include "command.hpp"
+#include "image.hpp"
+#include "imagePPM.hpp"
 int main()
 {
+    sessionHandler* sessionHandlerWorker = new sessionHandler();
+
+    while(1)
+    {
+        command* currentCommand = sessionHandlerWorker->CommandReaderWorker.readCommand();
+        sessionHandlerWorker->executeCommand(*currentCommand);
+    }
+
     ImagePPM* sampleImagePPM = new ImagePPM();
     
     readImage* sampleImageReader = new readImage("federer.ppm");
     sampleImageReader->VisitPPM(*sampleImagePPM);
+
 
     // ImagePPM* sampleImagePPM2 = new ImagePPM();
 
