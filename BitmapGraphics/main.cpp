@@ -16,10 +16,12 @@ int main()
         sessionHandlerWorker->executeCommand(*currentCommand);
     }
 
-    ImagePPM* sampleImagePPM = new ImagePPM();
+    delete sessionHandlerWorker;
+
+    // ImagePPM* sampleImagePPM = new ImagePPM();
     
-    readImage* sampleImageReader = new readImage("federer.ppm");
-    sampleImageReader->VisitPPM(*sampleImagePPM);
+    // readImage* sampleImageReader = new readImage("federer.ppm");
+    // sampleImageReader->VisitPPM(*sampleImagePPM);
 
 
     // ImagePPM* sampleImagePPM2 = new ImagePPM();
@@ -48,9 +50,9 @@ int main()
     // saveImage* saverImage = new saveImage();
     // saverImage->VisitPPM(*sampleImagePPM);
 
-    std::vector<Image*> testingVec;
-    testingVec.push_back(sampleImagePPM);
+    // std::vector<Image*> testingVec;
+    // testingVec.push_back(sampleImagePPM);
     
-    sessionHandler* currentSessionHandler = new sessionHandler();
-    currentSessionHandler->createNewSession(testingVec);
+    // sessionHandler* currentSessionHandler = new sessionHandler();
+    // currentSessionHandler->createNewSession(testingVec);
 }   

@@ -93,7 +93,7 @@ class rotateRight : public Visitor
 class collage : public Visitor
 {
     public:
-        ImagePPM transformationImage;
+        ImagePPM transformationImagePPM;
         int direction;
         collage(ImagePPM &_transformationImage, int _direction);
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;

@@ -7,6 +7,7 @@ command *command::clone()
 {
     return new command(*this);
 }
+command::command(){}
 command::command(std::vector<std::string> &_commandArguments)
 {
     commandCounter++;
@@ -22,4 +23,5 @@ void command::printInfo(std::ostream &out)
     {
         out << s;
     }
+    out << std::endl;
 }

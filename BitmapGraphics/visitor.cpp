@@ -188,20 +188,20 @@ void rotateRight::VisitPPM(ImagePPM &objectImagePPM)
 }
 collage::collage(ImagePPM &_transformationImage, int _direction)
 {
-    transformationImage = _transformationImage;
+    transformationImagePPM = _transformationImage;
     direction = _direction;
 }
 void collage::VisitPPM(ImagePPM &objectImagePPM)
 {
     if(direction == 1) // horizontal
     {
-        if(objectImagePPM.height != transformationImage.height)
+        if(objectImagePPM.height != transformationImagePPM.height)
         {
             std::cerr<<"Size for horizontal collab is not right"<<std::endl;
             return;
         }
         int newHeight = objectImagePPM.height;
-        int newWidth = objectImagePPM.width + transformationImage.width;
+        int newWidth = objectImagePPM.width + transformationImagePPM.width;
         int newColors = objectImagePPM.colors;
         int*** newColorMatrix = objectImagePPM.MatrixMaker(newHeight,
                                                             newWidth,
@@ -214,11 +214,11 @@ void collage::VisitPPM(ImagePPM &objectImagePPM)
                 newColorMatrix[i][j][1] = objectImagePPM.colorMatrix[i][j][1];
                 newColorMatrix[i][j][2] = objectImagePPM.colorMatrix[i][j][2];
             }
-            for(int j=0; j<transformationImage.width; j++)
+            for(int j=0; j<transformationImagePPM.width; j++)
             {
-                newColorMatrix[i][j+objectImagePPM.width][0] = transformationImage.colorMatrix[i][j][0];
-                newColorMatrix[i][j+objectImagePPM.width][1] = transformationImage.colorMatrix[i][j][1];
-                newColorMatrix[i][j+objectImagePPM.width][2] = transformationImage.colorMatrix[i][j][2];
+                newColorMatrix[i][j+objectImagePPM.width][0] = transformationImagePPM.colorMatrix[i][j][0];
+                newColorMatrix[i][j+objectImagePPM.width][1] = transformationImagePPM.colorMatrix[i][j][1];
+                newColorMatrix[i][j+objectImagePPM.width][2] = transformationImagePPM.colorMatrix[i][j][2];
             }
         }
         delete[] objectImagePPM.colorMatrix;
@@ -229,12 +229,12 @@ void collage::VisitPPM(ImagePPM &objectImagePPM)
     }
     else
     {
-        if(objectImagePPM.width != transformationImage.width)
+        if(objectImagePPM.width != transformationImagePPM.width)
         {
             std::cerr<<"Size for vertical collab is not right"<<std::endl;
             return;
         }
-        int newHeight = objectImagePPM.height + transformationImage.height;
+        int newHeight = objectImagePPM.height + transformationImagePPM.height;
         int newWidth = objectImagePPM.width;
         int newColors = objectImagePPM.colors;
         int*** newColorMatrix = objectImagePPM.MatrixMaker(newHeight,
@@ -249,13 +249,13 @@ void collage::VisitPPM(ImagePPM &objectImagePPM)
                 newColorMatrix[i][j][2] = objectImagePPM.colorMatrix[i][j][2];
             }
         }
-        for(int i=0; i<transformationImage.height; i++)
+        for(int i=0; i<transformationImagePPM.height; i++)
         {
             for(int j=0; j<newWidth; j++)
             {
-                newColorMatrix[i+objectImagePPM.height][j][0] = transformationImage.colorMatrix[i][j][0];
-                newColorMatrix[i+objectImagePPM.height][j][1] = transformationImage.colorMatrix[i][j][1];
-                newColorMatrix[i+objectImagePPM.height][j][2] = transformationImage.colorMatrix[i][j][2];
+                newColorMatrix[i+objectImagePPM.height][j][0] = transformationImagePPM.colorMatrix[i][j][0];
+                newColorMatrix[i+objectImagePPM.height][j][1] = transformationImagePPM.colorMatrix[i][j][1];
+                newColorMatrix[i+objectImagePPM.height][j][2] = transformationImagePPM.colorMatrix[i][j][2];
             }
         }
         delete[] objectImagePPM.colorMatrix;

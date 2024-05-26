@@ -10,6 +10,7 @@ class command
         int uniqueCommandID;
         std::vector<std::string> commandArguments;
         command* clone();
+        command();
         command(std::vector<std::string> &_commandArguments);
         void printInfo(std::ostream &out = std::cout);
 };

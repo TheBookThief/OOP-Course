@@ -31,7 +31,11 @@ class sessionHandler
         void executeSaveCommand(command &currentCommand);
         void executeUndoCommand(command &currentCommand);
         void executeSaveAsCommand(command &currentCommand);
-        void executeAddCommand(command &currentCommand);
+        void executeAddImageCommand(command &currentCommand);
+        void executeSessionInfoCommand(command &currentCommand);
+        void executeChangeActiveSessionCommand(command &currentCommand);
+        void executeAddTransformationCommand(command &currentCommand);
+        void executeMakeCollageCommand(command &currentCommand);
         class CommandReader
         {
             public:
