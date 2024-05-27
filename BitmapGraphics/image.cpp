@@ -16,7 +16,7 @@ int ***Image::MatrixMaker(int height, int width, int colors)
     {
         for (int j = 0; j < width; j++)
         {
-            newColorMatrix[i][j] = new int[3];
+            newColorMatrix[i][j] = new int[colors];
         }
     }
     return newColorMatrix;

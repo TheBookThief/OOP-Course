@@ -1,9 +1,9 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include "imagePPM.hpp"
+#include "ImagePBM.hpp"
 #include "visitor.hpp"
-ImagePPM &ImagePPM::operator=(ImagePPM &_transformationImage)
+ImagePBM &ImagePBM::operator=(ImagePBM &_transformationImage)
 {
     height = _transformationImage.height;
     width = _transformationImage.width;
@@ -27,15 +27,15 @@ ImagePPM &ImagePPM::operator=(ImagePPM &_transformationImage)
     }
     return *this;
 }
-void ImagePPM::AcceptVisitor(Visitor *visitor)
+void ImagePBM::AcceptVisitor(Visitor *visitor)
 {
-    visitor->VisitPPM(*this);
+    visitor->VisitPBM(*this);
 }
-Image *ImagePPM::clone()
+Image *ImagePBM::clone()
 {
-    return new ImagePPM(*this);
+    return new ImagePBM(*this);
 }
-ImagePPM::ImagePPM()
+ImagePBM::ImagePBM()
 {
     this->colors = 3;
     this->maxColor = 255;

@@ -4,24 +4,17 @@
 #include<string>
 #include<vector>
 #include "imagePPM.hpp"
+#include "imagePGM.hpp"
+#include "imagePBM.hpp"
 class command;
 
 class Visitor
 {
     public:
         virtual void VisitPPM(ImagePPM &objectImagePPM) = 0;
-        // virtual void VisitPGM(ImagePGM &objectImagePGM) = 0;
-        // virtual void VisitPBM(ImagePBM &objectImagePBM) = 0;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) = 0;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) = 0;
 };
-// void ImagePGM::AcceptVisitor(Visitor* visitor)
-// {
-//     visitor->VisitPGM(*this);
-// }
-// void ImagePBM::AcceptVisitor(Visitor* visitor)
-// {
-//     visitor->VisitPBM(*this);
-// }
-
 
 /* Load image method */
 class readImage : public Visitor
@@ -30,6 +23,8 @@ class readImage : public Visitor
         std::string inputFileName;
         readImage(std::string _inputFileName);
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* Grayscale */
@@ -40,6 +35,8 @@ class grayscale : public Visitor
         const double RED_MODIFIER = 0.299;
         const double GREEN_MODIFIER = 0.587;
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* Monochrome */
@@ -50,6 +47,8 @@ class monochrome : public Visitor
         const double RED_MODIFIER = 0.299;
         const double GREEN_MODIFIER = 0.587;
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* Negative */
@@ -57,6 +56,8 @@ class negative : public Visitor
 {
     public:
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* Save Image */
@@ -64,6 +65,8 @@ class saveImage : public Visitor
 {
     public:
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* Save as Image */
@@ -73,6 +76,8 @@ class saveAsImage : public Visitor
         std::string newFilename;
         saveAsImage(std::string _newFilename);
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* RotateLeft */
@@ -80,6 +85,8 @@ class rotateLeft : public Visitor
 {
     public:
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* Rotate Right */
@@ -87,6 +94,8 @@ class rotateRight : public Visitor
 {
     public:
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };
 
 /* Collage */
@@ -94,7 +103,13 @@ class collage : public Visitor
 {
     public:
         ImagePPM transformationImagePPM;
+        ImagePGM transformationImagePGM;
+        ImagePBM transformationImagePBM;
         int direction;
         collage(ImagePPM &_transformationImage, int _direction);
+        collage(ImagePGM &_transformationImage, int _direction);
+        collage(ImagePBM &_transformationImage, int _direction);
         virtual void VisitPPM(ImagePPM &objectImagePPM) override;
+        virtual void VisitPGM(ImagePGM &objectImagePGM) override;
+        virtual void VisitPBM(ImagePBM &objectImagePBM) override;
 };

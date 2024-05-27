@@ -237,6 +237,7 @@ void sessionHandler::executeAddImageCommand(command &currentCommand)
         ImagePPM* newImage = new ImagePPM();
         readImageMaker->VisitPPM(*newImage);
         activeSessions[activeSessionID]->activeImages.push_back(newImage);
+        std::cout<<"~3"<<std::endl;
     }
     else if(fileExtension == "pgm")
     {
@@ -246,6 +247,7 @@ void sessionHandler::executeAddImageCommand(command &currentCommand)
     {
 
     }
+    std::cout<<"~4"<<std::endl;
     delete readImageMaker;
 }
 void sessionHandler::executeChangeActiveSessionCommand(command &currentCommand)
@@ -292,6 +294,7 @@ void sessionHandler::executeMakeCollageCommand(command &currentCommand)
     if(firstFileExtension != secondFileExtension)
     {
         /*throw*/
+        std::cerr<<"Extensions don't match"<<std::endl;
     }
 
     int collageDirection;
@@ -303,25 +306,35 @@ void sessionHandler::executeMakeCollageCommand(command &currentCommand)
     if (firstFileExtension == "ppm")
     {
         ImagePPM *currentTransformationImage = new ImagePPM();
-        readImage *firstImageReader = new readImage(currentCommand.commandArguments[3]);
-        currentTransformationImage->AcceptVisitor(firstImageReader);
-        delete firstImageReader;
+        readImage *firstImageMaker = new readImage(currentCommand.commandArguments[3]);
+        currentTransformationImage->AcceptVisitor(firstImageMaker);
 
         ImagePPM *collageResult = new ImagePPM();
 
         readImage *collageResultReader = new readImage(currentCommand.commandArguments[2]);
         collageResult->AcceptVisitor(collageResultReader);
-        delete collageResultReader;
 
         collage *collageMaker = new collage(*currentTransformationImage, collageDirection);
         collageResult->AcceptVisitor(collageMaker);
-        delete collageMaker;
-
+        
         saveAsImage *saveAsImageMaker = new saveAsImage(currentCommand.commandArguments[4]);
         collageResult->AcceptVisitor(saveAsImageMaker);
+        
+        std::cout<<"~1"<<std::endl;
+
         delete saveAsImageMaker;
-        delete currentTransformationImage;
+        std::cout<<"~12"<<std::endl;
+        delete collageResultReader;
+        std::cout<<"~14"<<std::endl;
         delete collageResult;
+        std::cout<<"~15"<<std::endl;
+        delete firstImageMaker;
+        std::cout<<"~16"<<std::endl;
+        delete currentTransformationImage;
+        std::cout<<"~17"<<std::endl;
+        delete collageMaker;
+        std::cout<<"~13"<<std::endl;
+        
     }
     else if (firstFileExtension == "pgm")
     {
@@ -334,8 +347,12 @@ void sessionHandler::executeMakeCollageCommand(command &currentCommand)
     command *addNewCollageCommand = new command();
     addNewCollageCommand->commandArguments.push_back("add");
     addNewCollageCommand->commandArguments.push_back(currentCommand.commandArguments[4]);
+    std::cout<<"~2"<<std::endl;
     this->executeAddImageCommand(*addNewCollageCommand);
+    std::cout<<"~2.2"<<std::endl;
     delete addNewCollageCommand;
+    std::cout<<"~2.3"<<std::endl;
+
 }
 void sessionHandler::executeCommand(command &currentCommand)
 {

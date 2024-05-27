@@ -1,9 +1,9 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include "imagePPM.hpp"
+#include "ImagePGM.hpp"
 #include "visitor.hpp"
-ImagePPM &ImagePPM::operator=(ImagePPM &_transformationImage)
+ImagePGM &ImagePGM::operator=(ImagePGM &_transformationImage)
 {
     height = _transformationImage.height;
     width = _transformationImage.width;
@@ -18,24 +18,21 @@ ImagePPM &ImagePPM::operator=(ImagePPM &_transformationImage)
         {
             for(int p = 0; p < colors; p++)
             {
-                colorMatrix[i][j][p] = _transformationImage.colorMatrix[i][j][p];    
+                colorMatrix[i][j][p] = _transformationImage.colorMatrix[i][j][p];
             }
-            // colorMatrix[i][j][0] = _transformationImage.colorMatrix[i][j][0];
-            // colorMatrix[i][j][1] = _transformationImage.colorMatrix[i][j][1];
-            // colorMatrix[i][j][2] = _transformationImage.colorMatrix[i][j][2];
         }
     }
     return *this;
 }
-void ImagePPM::AcceptVisitor(Visitor *visitor)
+void ImagePGM::AcceptVisitor(Visitor *visitor)
 {
-    visitor->VisitPPM(*this);
+    visitor->VisitPGM(*this);
 }
-Image *ImagePPM::clone()
+Image *ImagePGM::clone()
 {
-    return new ImagePPM(*this);
+    return new ImagePGM(*this);
 }
-ImagePPM::ImagePPM()
+ImagePGM::ImagePGM()
 {
     this->colors = 3;
     this->maxColor = 255;

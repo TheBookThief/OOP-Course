@@ -5,11 +5,11 @@
 #include "image.hpp"
 class Visitor;
 
-class ImagePPM : public Image
+class ImagePGM : public Image
 {
     public:
         Image* clone() override;
-        ImagePPM();
-        ImagePPM& operator=(ImagePPM &_transformationImage);
+        ImagePGM();
+        ImagePGM& operator=(ImagePGM &_transformationImage);
         void AcceptVisitor(Visitor* visitor) override;
 };
