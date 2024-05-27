@@ -36,6 +36,7 @@ void Image::PrintDetails(std::ostream &out)
 }
 Image::~Image()
 {
+    if(colorMatrix == nullptr) return;
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)

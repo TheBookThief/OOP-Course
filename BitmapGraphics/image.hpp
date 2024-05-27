@@ -8,7 +8,7 @@ class command;
 class Image
 {
     public:
-        int*** colorMatrix;
+        int*** colorMatrix = nullptr;
         int width, height, colors, maxColor;
         std::string magicNumber;
         std::string filename;

@@ -1,7 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include "ImagePBM.hpp"
+#include "imagePBM.hpp"
 #include "visitor.hpp"
 ImagePBM &ImagePBM::operator=(ImagePBM &_transformationImage)
 {

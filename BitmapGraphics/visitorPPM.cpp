@@ -225,9 +225,9 @@ void collage::VisitPPM(ImagePPM &objectImagePPM)
         int newHeight = objectImagePPM.height;
         int newWidth = objectImagePPM.width + transformationImagePPM.width;
         int newColors = objectImagePPM.colors;
-        int*** newColorMatrix = objectImagePPM.MatrixMaker(newHeight,
-                                                            newWidth,
-                                                            newColors);
+        int*** newColorMatrix = Image::MatrixMaker(newHeight,
+                                                    newWidth,
+                                                    newColors);
         for(int i=0; i<newHeight; i++)
         {
             for(int j=0; j<objectImagePPM.width; j++)
@@ -251,7 +251,7 @@ void collage::VisitPPM(ImagePPM &objectImagePPM)
                 // newColorMatrix[i][j+objectImagePPM.width][2] = transformationImagePPM.colorMatrix[i][j][2];
             }
         }
-        delete[] objectImagePPM.colorMatrix;
+        delete[] objectImagePPM.colorMatrix; /*todo fix deletion*/
         objectImagePPM.height = newHeight;
         objectImagePPM.width = newWidth;
         objectImagePPM.colors = newColors;
