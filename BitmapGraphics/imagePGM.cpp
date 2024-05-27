@@ -34,6 +34,6 @@ Image *ImagePGM::clone()
 }
 ImagePGM::ImagePGM()
 {
-    this->colors = 3;
+    this->colors = 1;
     this->maxColor = 255;
 }

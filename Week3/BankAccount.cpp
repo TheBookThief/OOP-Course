@@ -66,6 +66,6 @@ void BankAccount::copy(const BankAccount &other)
 }
 void BankAccount::deallocate()
 {
-    delete[] this->name;
-    delete[] this->iban;
+    delete this->name;
+    delete this->iban;
 }

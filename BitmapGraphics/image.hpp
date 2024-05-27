@@ -17,5 +17,6 @@ class Image
         virtual void AcceptVisitor(Visitor* visitor) = 0;
         virtual void PrintDetails(std::ostream &out = std::cout);
         static int*** MatrixMaker(int _height, int _width, int _colors);
+        void MatrixDeleter();
         ~Image();
 };

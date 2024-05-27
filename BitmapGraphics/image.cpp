@@ -23,10 +23,10 @@ int ***Image::MatrixMaker(int height, int width, int colors)
 }
 void Image::PrintDetails(std::ostream &out)
 {
-    out << "For image " << filename << " in session:" << std::endl;
+    out << "For image " << filename << ": " << std::endl;
     if (pendingCommands.size() == 0)
     {
-        out << "No pending transformations" << std::endl;
+        out << "no pending transformations" << std::endl;
         return;
     }
     for (command *i : pendingCommands)
@@ -35,6 +35,19 @@ void Image::PrintDetails(std::ostream &out)
     }
 }
 Image::~Image()
+{
+    if(colorMatrix == nullptr) return;
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            delete[] colorMatrix[i][j];
+        }
+        delete[] colorMatrix[i];
+    }
+    delete[] colorMatrix;
+}
+void Image::MatrixDeleter()
 {
     if(colorMatrix == nullptr) return;
     for (int i = 0; i < height; i++)

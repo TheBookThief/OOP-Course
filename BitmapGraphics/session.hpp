@@ -36,6 +36,8 @@ class sessionHandler
         void executeChangeActiveSessionCommand(command &currentCommand);
         void executeAddTransformationCommand(command &currentCommand);
         void executeMakeCollageCommand(command &currentCommand);
+        void executeHelpCommand(command &currentCommand);
+        ~sessionHandler();
         class CommandReader
         {
             public:
