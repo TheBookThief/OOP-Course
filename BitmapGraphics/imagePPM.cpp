@@ -20,9 +20,6 @@ ImagePPM &ImagePPM::operator=(ImagePPM &_transformationImage)
             {
                 colorMatrix[i][j][p] = _transformationImage.colorMatrix[i][j][p];    
             }
-            // colorMatrix[i][j][0] = _transformationImage.colorMatrix[i][j][0];
-            // colorMatrix[i][j][1] = _transformationImage.colorMatrix[i][j][1];
-            // colorMatrix[i][j][2] = _transformationImage.colorMatrix[i][j][2];
         }
     }
     return *this;

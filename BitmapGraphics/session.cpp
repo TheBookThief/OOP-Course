@@ -30,13 +30,13 @@ void session::printInfo(std::ostream &out)
         image->PrintDetails(out);
     }
 }
-void session::appendCommand(command &command)
-{
-    for (Image *image : activeImages)
-    {
-        image->pendingCommands.push_back(command.clone());
-    }
-}
+// void session::appendCommand(command &command)
+// {
+//     for (Image *image : activeImages)
+//     {
+//         image->pendingCommands.push_back(command.clone());
+//     }
+// }
 session::~session()
 {
     for (Image *image : activeImages)
@@ -45,28 +45,28 @@ session::~session()
     }
 }
 
-void sessionHandler::sendCommandToSession(command &_command)
-{
-    activeSessions[activeSessionID]->appendCommand(_command);
-}
-void sessionHandler::changeActiveSession(int newSessionNumber)
-{
-    try
-    {
-        if (newSessionNumber < activeSessions.size())
-            activeSessionID = newSessionNumber;
-        else
-            throw std::out_of_range("Invalid session number");
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-}
+// void sessionHandler::sendCommandToSession(command &_command)
+// {
+//     activeSessions[activeSessionID]->appendCommand(_command);
+// }
+// void sessionHandler::changeActiveSession(int newSessionNumber)
+// {
+//     try
+//     {
+//         if (newSessionNumber < activeSessions.size())
+//             activeSessionID = newSessionNumber;
+//         else
+//             throw std::out_of_range("Invalid session number");
+//     }
+//     catch(const std::exception& e)
+//     {
+//         std::cerr << e.what() << '\n';
+//     }
+// }
 void sessionHandler::createNewSession(std::vector<Image*> &initialImages, std::ostream &out)
 {
     session *newSession = new session(initialImages);
-    std::cout<<"! "<<newSession->uniqueSessionID<<std::endl;
+    // std::cout<<"! "<<newSession->uniqueSessionID<<std::endl;
     activeSessionID = newSession->uniqueSessionID;
     activeSessions.push_back(newSession);
     newSession->printInfo(out);
@@ -200,13 +200,13 @@ void sessionHandler::executeSaveCommand(command &currentCommand)
                 }
                 else if (tempCommand->commandArguments[0] == "rotate")
                 {
-                    if (tempCommand->commandArguments[1] == "left")
+                    if (tempCommand->commandArguments[1] == "right")
                     {
                         rotateRight *rotateRightImageMaker = new rotateRight();
                         image->AcceptVisitor(rotateRightImageMaker);
                         delete rotateRightImageMaker;
                     }
-                    else if (tempCommand->commandArguments[1] == "right")
+                    else if (tempCommand->commandArguments[1] == "left")
                     {
                         rotateLeft *rotateLeftImageMaker = new rotateLeft();
                         image->AcceptVisitor(rotateLeftImageMaker);
@@ -383,11 +383,6 @@ void sessionHandler::executeAddTransformationCommand(command &currentCommand)
 {
     try
     {
-        if(currentCommand.commandArguments.size() != 1)
-        {
-            throw std::logic_error("Invalid number of arguments.");
-            return;
-        }
         activeSessions[activeSessionID]->pendingOperationsID.push_back(currentCommand.uniqueCommandID);
         for(Image* image : activeSessions[activeSessionID]->activeImages)
         {

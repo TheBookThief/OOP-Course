@@ -6,6 +6,35 @@
 #include "command.hpp"
 #include "image.hpp"
 #include "imagePPM.hpp"
+void Test1()
+{
+    ImagePPM* sampleImagePPM = new ImagePPM();
+    
+    readImage* sampleImageReader = new readImage("federer.ppm");
+    sampleImageReader->VisitPPM(*sampleImagePPM);
+
+    grayscale* grayscaleImageMaker = new grayscale();
+    grayscaleImageMaker->VisitPPM(*sampleImagePPM);
+
+    saveImage* saverImage = new saveImage();
+    saverImage->VisitPPM(*sampleImagePPM);
+}
+void Test2()
+{
+    ImagePBM* sampleImagePBM = new ImagePBM();
+    
+    readImage* sampleImageReader = new readImage("sample.pbm");
+    sampleImageReader->VisitPBM(*sampleImagePBM);
+
+    rotateRight* rotator = new rotateRight();
+    rotator->VisitPBM(*sampleImagePBM);
+
+    rotateRight* rotator = new rotateRight();
+    rotator->VisitPBM(*sampleImagePBM);
+
+    saveImage* saverImage = new saveImage();
+    saverImage->VisitPBM(*sampleImagePBM);
+}
 int main()
 {
     sessionHandler* sessionHandlerWorker = new sessionHandler();

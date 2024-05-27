@@ -70,9 +70,6 @@ void negative::VisitPBM(ImagePBM &objectImagePBM)
             {
                 objectImagePBM.colorMatrix[i][j][p] = objectImagePBM.maxColor - objectImagePBM.colorMatrix[i][j][p];
             }
-            // objectImagePBM.colorMatrix[i][j][0] = objectImagePBM.maxColor - objectImagePBM.colorMatrix[i][j][0];
-            // objectImagePBM.colorMatrix[i][j][1] = objectImagePBM.maxColor - objectImagePBM.colorMatrix[i][j][1];
-            // objectImagePBM.colorMatrix[i][j][2] = objectImagePBM.maxColor - objectImagePBM.colorMatrix[i][j][2];
         }
     }
 }
@@ -96,9 +93,6 @@ void saveImage::VisitPBM(ImagePBM &objectImagePBM)
                 {
                     out << objectImagePBM.colorMatrix[i][j][p] << ' ';
                 }
-                // out <<  objectImagePBM.colorMatrix[i][j][0] << ' ';
-                // out <<  objectImagePBM.colorMatrix[i][j][1] << ' ';
-                // out <<  objectImagePBM.colorMatrix[i][j][2] << ' ';
             }
             out << std::endl;
         }
@@ -130,9 +124,6 @@ void saveAsImage::VisitPBM(ImagePBM &objectImagePBM)
                 {
                     out << objectImagePBM.colorMatrix[i][j][p] << ' ';
                 }
-                // out <<  objectImagePBM.colorMatrix[i][j][0] << ' ';
-                // out <<  objectImagePBM.colorMatrix[i][j][1] << ' ';
-                // out <<  objectImagePBM.colorMatrix[i][j][2] << ' ';
             }
             out << std::endl;
         }
@@ -167,9 +158,6 @@ void rotateLeft::VisitPBM(ImagePBM &objectImagePBM)
             {
                 newColorMatrix[newHeight - i - 1][j][p] = objectImagePBM.colorMatrix[j][i][p];
             }
-            // newColorMatrix[newHeight-i-1][j][0] = objectImagePBM.colorMatrix[j][i][0];
-            // newColorMatrix[newHeight-i-1][j][1] = objectImagePBM.colorMatrix[j][i][1];
-            // newColorMatrix[newHeight-i-1][j][2] = objectImagePBM.colorMatrix[j][i][2];
         }
     }
     objectImagePBM.MatrixDeleter();
@@ -201,9 +189,6 @@ void rotateRight::VisitPBM(ImagePBM &objectImagePBM)
             {
                 newColorMatrix[i][newWidth - j - 1][p] = objectImagePBM.colorMatrix[j][i][p];
             }
-            // newColorMatrix[i][newWidth-j-1][0] = objectImagePBM.colorMatrix[j][i][0];
-            // newColorMatrix[i][newWidth-j-1][1] = objectImagePBM.colorMatrix[j][i][1];
-            // newColorMatrix[i][newWidth-j-1][2] = objectImagePBM.colorMatrix[j][i][2];
         }
     }
     objectImagePBM.MatrixDeleter();
@@ -239,9 +224,6 @@ void collage::VisitPBM(ImagePBM &objectImagePBM)
                 {
                     newColorMatrix[i][j][p] = objectImagePBM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i][j][0] = objectImagePBM.colorMatrix[i][j][0];
-                // newColorMatrix[i][j][1] = objectImagePBM.colorMatrix[i][j][1];
-                // newColorMatrix[i][j][2] = objectImagePBM.colorMatrix[i][j][2];
             }
             for (int j = 0; j < transformationImagePBM.width; j++)
             {
@@ -249,9 +231,6 @@ void collage::VisitPBM(ImagePBM &objectImagePBM)
                 {
                     newColorMatrix[i][j + objectImagePBM.width][p] = transformationImagePBM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i][j+objectImagePBM.width][0] = transformationImagePBM.colorMatrix[i][j][0];
-                // newColorMatrix[i][j+objectImagePBM.width][1] = transformationImagePBM.colorMatrix[i][j][1];
-                // newColorMatrix[i][j+objectImagePBM.width][2] = transformationImagePBM.colorMatrix[i][j][2];
             }
         }
         objectImagePBM.MatrixDeleter();
@@ -281,9 +260,6 @@ void collage::VisitPBM(ImagePBM &objectImagePBM)
                 {
                     newColorMatrix[i][j][p] = objectImagePBM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i][j][0] = objectImagePBM.colorMatrix[i][j][0];
-                // newColorMatrix[i][j][1] = objectImagePBM.colorMatrix[i][j][1];
-                // newColorMatrix[i][j][2] = objectImagePBM.colorMatrix[i][j][2];
             }
         }
         for (int i = 0; i < transformationImagePBM.height; i++)
@@ -294,9 +270,6 @@ void collage::VisitPBM(ImagePBM &objectImagePBM)
                 {
                     newColorMatrix[i + objectImagePBM.height][j][p] = transformationImagePBM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i+objectImagePBM.height][j][0] = transformationImagePBM.colorMatrix[i][j][0];
-                // newColorMatrix[i+objectImagePBM.height][j][1] = transformationImagePBM.colorMatrix[i][j][1];
-                // newColorMatrix[i+objectImagePBM.height][j][2] = transformationImagePBM.colorMatrix[i][j][2];
             }
         }
         objectImagePBM.MatrixDeleter();

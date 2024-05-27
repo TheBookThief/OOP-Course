@@ -80,9 +80,6 @@ void negative::VisitPGM(ImagePGM &objectImagePGM)
             {
                 objectImagePGM.colorMatrix[i][j][p] = objectImagePGM.maxColor - objectImagePGM.colorMatrix[i][j][p];
             }
-            // objectImagePGM.colorMatrix[i][j][0] = objectImagePGM.maxColor - objectImagePGM.colorMatrix[i][j][0];
-            // objectImagePGM.colorMatrix[i][j][1] = objectImagePGM.maxColor - objectImagePGM.colorMatrix[i][j][1];
-            // objectImagePGM.colorMatrix[i][j][2] = objectImagePGM.maxColor - objectImagePGM.colorMatrix[i][j][2];
         }
     }
 }
@@ -106,9 +103,6 @@ void saveImage::VisitPGM(ImagePGM &objectImagePGM)
                 {
                     out << objectImagePGM.colorMatrix[i][j][p] << ' ';
                 }
-                // out <<  objectImagePGM.colorMatrix[i][j][0] << ' ';
-                // out <<  objectImagePGM.colorMatrix[i][j][1] << ' ';
-                // out <<  objectImagePGM.colorMatrix[i][j][2] << ' ';
             }
             out << std::endl;
         }
@@ -140,9 +134,6 @@ void saveAsImage::VisitPGM(ImagePGM &objectImagePGM)
                 {
                     out << objectImagePGM.colorMatrix[i][j][p] << ' ';
                 }
-                // out <<  objectImagePGM.colorMatrix[i][j][0] << ' ';
-                // out <<  objectImagePGM.colorMatrix[i][j][1] << ' ';
-                // out <<  objectImagePGM.colorMatrix[i][j][2] << ' ';
             }
             out << std::endl;
         }
@@ -177,9 +168,6 @@ void rotateLeft::VisitPGM(ImagePGM &objectImagePGM)
             {
                 newColorMatrix[newHeight - i - 1][j][p] = objectImagePGM.colorMatrix[j][i][p];
             }
-            // newColorMatrix[newHeight-i-1][j][0] = objectImagePGM.colorMatrix[j][i][0];
-            // newColorMatrix[newHeight-i-1][j][1] = objectImagePGM.colorMatrix[j][i][1];
-            // newColorMatrix[newHeight-i-1][j][2] = objectImagePGM.colorMatrix[j][i][2];
         }
     }
     objectImagePGM.MatrixDeleter();
@@ -211,9 +199,6 @@ void rotateRight::VisitPGM(ImagePGM &objectImagePGM)
             {
                 newColorMatrix[i][newWidth - j - 1][p] = objectImagePGM.colorMatrix[j][i][p];
             }
-            // newColorMatrix[i][newWidth-j-1][0] = objectImagePGM.colorMatrix[j][i][0];
-            // newColorMatrix[i][newWidth-j-1][1] = objectImagePGM.colorMatrix[j][i][1];
-            // newColorMatrix[i][newWidth-j-1][2] = objectImagePGM.colorMatrix[j][i][2];
         }
     }
     objectImagePGM.MatrixDeleter();
@@ -249,9 +234,6 @@ void collage::VisitPGM(ImagePGM &objectImagePGM)
                 {
                     newColorMatrix[i][j][p] = objectImagePGM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i][j][0] = objectImagePGM.colorMatrix[i][j][0];
-                // newColorMatrix[i][j][1] = objectImagePGM.colorMatrix[i][j][1];
-                // newColorMatrix[i][j][2] = objectImagePGM.colorMatrix[i][j][2];
             }
             for (int j = 0; j < transformationImagePGM.width; j++)
             {
@@ -259,9 +241,6 @@ void collage::VisitPGM(ImagePGM &objectImagePGM)
                 {
                     newColorMatrix[i][j + objectImagePGM.width][p] = transformationImagePGM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i][j+objectImagePGM.width][0] = transformationImagePGM.colorMatrix[i][j][0];
-                // newColorMatrix[i][j+objectImagePGM.width][1] = transformationImagePGM.colorMatrix[i][j][1];
-                // newColorMatrix[i][j+objectImagePGM.width][2] = transformationImagePGM.colorMatrix[i][j][2];
             }
         }
         objectImagePGM.MatrixDeleter();
@@ -291,9 +270,6 @@ void collage::VisitPGM(ImagePGM &objectImagePGM)
                 {
                     newColorMatrix[i][j][p] = objectImagePGM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i][j][0] = objectImagePGM.colorMatrix[i][j][0];
-                // newColorMatrix[i][j][1] = objectImagePGM.colorMatrix[i][j][1];
-                // newColorMatrix[i][j][2] = objectImagePGM.colorMatrix[i][j][2];
             }
         }
         for (int i = 0; i < transformationImagePGM.height; i++)
@@ -304,9 +280,6 @@ void collage::VisitPGM(ImagePGM &objectImagePGM)
                 {
                     newColorMatrix[i + objectImagePGM.height][j][p] = transformationImagePGM.colorMatrix[i][j][p];
                 }
-                // newColorMatrix[i+objectImagePGM.height][j][0] = transformationImagePGM.colorMatrix[i][j][0];
-                // newColorMatrix[i+objectImagePGM.height][j][1] = transformationImagePGM.colorMatrix[i][j][1];
-                // newColorMatrix[i+objectImagePGM.height][j][2] = transformationImagePGM.colorMatrix[i][j][2];
             }
         }
         objectImagePGM.MatrixDeleter();
