@@ -28,9 +28,60 @@ void Test2()
 
     rotateRight* rotator = new rotateRight();
     rotator->VisitPBM(*sampleImagePBM);
-
-    rotateRight* rotator = new rotateRight();
     rotator->VisitPBM(*sampleImagePBM);
+
+    saveImage* saverImage = new saveImage();
+    saverImage->VisitPBM(*sampleImagePBM);
+}
+void Test3()
+{
+    if(sessionHandler::CommandReader::findExtension("randomname.ppm") != "ppm") 
+    {
+        std::cerr<<"Test3 failed"<<std::endl;
+        return;
+    }
+    if(sessionHandler::CommandReader::findExtension("randomname.ppppppppm") != "ppppppppm") 
+    {
+        std::cerr<<"Test3 failed"<<std::endl;
+        return;
+    }
+    sessionHandler::CommandReader::findExtension("noextension"); // Should throw exception
+}
+void Test4()
+{
+    ImagePPM* sampleImagePPM = new ImagePPM();
+    
+    readImage* sampleImageReader = new readImage("federer.ppm");
+    sampleImageReader->VisitPPM(*sampleImagePPM);
+
+    monochrome* monochromeImageMaker = new monochrome();
+    monochromeImageMaker->VisitPPM(*sampleImagePPM);
+
+    saveImage* saverImage = new saveImage();
+    saverImage->VisitPPM(*sampleImagePPM);
+}
+void Test5()
+{
+    ImagePPM* sampleImagePPM = new ImagePPM();
+    
+    readImage* sampleImageReader = new readImage("federer.ppm");
+    sampleImageReader->VisitPPM(*sampleImagePPM);
+
+    negative* negativeImageMaker = new negative();
+    negativeImageMaker->VisitPPM(*sampleImagePPM);
+
+    saveImage* saverImage = new saveImage();
+    saverImage->VisitPPM(*sampleImagePPM);
+}
+void Test6()
+{
+    ImagePBM* sampleImagePBM = new ImagePBM();
+    
+    readImage* sampleImageReader = new readImage("sample.pbm");
+    sampleImageReader->VisitPBM(*sampleImagePBM);
+
+    negative* negativeImageMaker = new negative();
+    negativeImageMaker->VisitPBM(*sampleImagePBM);
 
     saveImage* saverImage = new saveImage();
     saverImage->VisitPBM(*sampleImagePBM);
@@ -78,10 +129,4 @@ int main()
 
     // saveImage* saverImage = new saveImage();
     // saverImage->VisitPPM(*sampleImagePPM);
-
-    // std::vector<Image*> testingVec;
-    // testingVec.push_back(sampleImagePPM);
-    
-    // sessionHandler* currentSessionHandler = new sessionHandler();
-    // currentSessionHandler->createNewSession(testingVec);
 }   
