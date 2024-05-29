@@ -58,7 +58,7 @@ class Image
          * @param _width width of new matrix
          * @param _colors number of color channels of new matrix
         */
-        static int*** MatrixMaker(int _height, int _width, int _colors);
+        static int*** MatrixMaker(const int _height, const int _width, const int _colors);
         /**
          * @brief Method to delete the dynamically allocated matrix of the current object.
          * Relies on the correct dimensions of the image.

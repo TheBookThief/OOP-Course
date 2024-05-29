@@ -11,7 +11,7 @@
 */
 class command
 {
-    public:
+    private:
         /**
          * @brief Keeps track of the number of created commands by the user.
         */
@@ -20,6 +20,7 @@ class command
          * @brief Keeps track of the unique ID of the command.
         */
         int uniqueCommandID;
+    public:
         /**
          * @brief A vector used to store the arguments of each command.
         */
@@ -28,7 +29,7 @@ class command
          * @brief Basic clone method.
          * @return Returns a pointer to a copy of the command.
         */
-        command* clone();
+        command* clone() const;
         /**
          * @brief Default empty constructor.
         */
@@ -41,5 +42,6 @@ class command
         /**
          * @brief Prints information about the command.
         */
-        void printInfo(std::ostream &out = std::cout);
+        void printInfo(std::ostream &out = std::cout) const;
+        int getCommandID() const;
 };

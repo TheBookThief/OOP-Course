@@ -22,7 +22,7 @@ class ImagePGM : public Image
         /**
          * @brief Redefinition of = operator to perform a deep copy.
         */
-        ImagePGM& operator=(ImagePGM &_transformationImage);
+        ImagePGM& operator=(const ImagePGM &_transformationImage);
         /**
          * @brief Function to accept a visitor. Will execute the visitor's implementation of how to affect a PBM object. 
         */

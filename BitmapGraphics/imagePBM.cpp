@@ -3,7 +3,7 @@
 #include<vector>
 #include "imagePBM.hpp"
 #include "visitor.hpp"
-ImagePBM &ImagePBM::operator=(ImagePBM &_transformationImage)
+ImagePBM &ImagePBM::operator=(const ImagePBM &_transformationImage)
 {
     height = _transformationImage.height;
     width = _transformationImage.width;

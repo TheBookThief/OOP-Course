@@ -8,7 +8,7 @@
 #include "session.hpp"
 #include "visitor.hpp"
 int session::sessionCounter = 0;
-session::session(std::vector<Image *> &_activeImages)
+session::session(const std::vector<Image *> &_activeImages)
 {
     uniqueSessionID = sessionCounter;
     sessionCounter++;
@@ -95,7 +95,7 @@ command* sessionHandler::CommandReader::readCommand()
     command *newCommand = new command(currentArguments);
     return newCommand;
 }
-std::string sessionHandler::CommandReader::findExtension(std::string filename)
+std::string sessionHandler::CommandReader::findExtension(const std::string filename)
 {
     try
     {
@@ -115,7 +115,7 @@ std::string sessionHandler::CommandReader::findExtension(std::string filename)
     }
     return "";
 }
-void sessionHandler::executeLoadCommand(command &currentCommand)
+void sessionHandler::executeLoadCommand(const command &currentCommand)
 {
     try
     {
@@ -166,7 +166,7 @@ void sessionHandler::executeLoadCommand(command &currentCommand)
         std::cerr << e.what() << '\n';
     }
 }
-void sessionHandler::executeSaveCommand(command &currentCommand)
+void sessionHandler::executeSaveCommand(const command &currentCommand)
 {
     try
     {
@@ -241,7 +241,7 @@ void sessionHandler::executeSaveCommand(command &currentCommand)
         std::cerr << e.what() << '\n';
     }
 }
-void sessionHandler::executeUndoCommand(command &currentCommand)
+void sessionHandler::executeUndoCommand(const command &currentCommand)
 {
     try
     {
@@ -257,7 +257,7 @@ void sessionHandler::executeUndoCommand(command &currentCommand)
         for (Image *image : activeSessions[activeSessionID]->activeImages)
         {
             if(image->pendingCommands.size() == 0) continue;
-            if(image->pendingCommands.back()->uniqueCommandID == commandIDToRemove)
+            if(image->pendingCommands.back()->getCommandID() == commandIDToRemove)
             {
                 delete image->pendingCommands.back();
                 image->pendingCommands.pop_back();
@@ -269,7 +269,7 @@ void sessionHandler::executeUndoCommand(command &currentCommand)
         std::cerr << e.what() << '\n';
     }
 }
-void sessionHandler::executeSaveAsCommand(command &currentCommand)
+void sessionHandler::executeSaveAsCommand(const command &currentCommand)
 {
     try
     {    
@@ -299,7 +299,7 @@ void sessionHandler::executeSaveAsCommand(command &currentCommand)
         std::cerr << e.what() << '\n';
     }
 }
-void sessionHandler::executeAddImageCommand(command &currentCommand)
+void sessionHandler::executeAddImageCommand(const command &currentCommand)
 {
     try
     {  
@@ -340,7 +340,7 @@ void sessionHandler::executeAddImageCommand(command &currentCommand)
         std::cerr << e.what() << '\n';
     }
 }
-void sessionHandler::executeChangeActiveSessionCommand(command &currentCommand)
+void sessionHandler::executeChangeActiveSessionCommand(const command &currentCommand)
 {
     try
     {
@@ -375,15 +375,15 @@ void sessionHandler::executeChangeActiveSessionCommand(command &currentCommand)
     }
     
 }
-void sessionHandler::executeSessionInfoCommand(command &currentCommand)
+void sessionHandler::executeSessionInfoCommand(const command &currentCommand)
 {
     activeSessions[activeSessionID]->printInfo();
 }
-void sessionHandler::executeAddTransformationCommand(command &currentCommand)
+void sessionHandler::executeAddTransformationCommand(const command &currentCommand)
 {
     try
     {
-        activeSessions[activeSessionID]->pendingOperationsID.push_back(currentCommand.uniqueCommandID);
+        activeSessions[activeSessionID]->pendingOperationsID.push_back(currentCommand.getCommandID());
         for(Image* image : activeSessions[activeSessionID]->activeImages)
         {
             image->pendingCommands.push_back(currentCommand.clone());
@@ -394,7 +394,7 @@ void sessionHandler::executeAddTransformationCommand(command &currentCommand)
         std::cerr << e.what() << '\n';
     }
 }
-void sessionHandler::executeMakeCollageCommand(command &currentCommand)
+void sessionHandler::executeMakeCollageCommand(const command &currentCommand)
 {
     try
     {
@@ -488,7 +488,7 @@ void sessionHandler::executeMakeCollageCommand(command &currentCommand)
     }
 
 }
-void sessionHandler::executeCommand(command &currentCommand)
+void sessionHandler::executeCommand(const command &currentCommand)
 {
     try
     {
@@ -549,7 +549,7 @@ void sessionHandler::executeCommand(command &currentCommand)
         std::cerr << e.what() << '\n';
     }
 }
-void sessionHandler::executeHelpCommand(command &currentCommand)
+void sessionHandler::executeHelpCommand(const command &currentCommand)
 {
     try
     {

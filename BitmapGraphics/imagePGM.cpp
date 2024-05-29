@@ -3,7 +3,7 @@
 #include<vector>
 #include "ImagePGM.hpp"
 #include "visitor.hpp"
-ImagePGM &ImagePGM::operator=(ImagePGM &_transformationImage)
+ImagePGM &ImagePGM::operator=(const ImagePGM &_transformationImage)
 {
     height = _transformationImage.height;
     width = _transformationImage.width;

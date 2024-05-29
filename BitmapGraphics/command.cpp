@@ -3,7 +3,7 @@
 #include<vector>
 #include "command.hpp"
 int command::commandCounter = 0;
-command *command::clone()
+command *command::clone() const
 {
     return new command(*this);
 }
@@ -17,11 +17,15 @@ command::command(std::vector<std::string> &_commandArguments)
         commandArguments.push_back(i);
     }
 }
-void command::printInfo(std::ostream &out)
+void command::printInfo(std::ostream &out) const
 {
     for (std::string s : commandArguments)
     {
         out << s;
     }
     out << std::endl;
+}
+int command::getCommandID() const
+{
+    return uniqueCommandID;
 }

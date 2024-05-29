@@ -5,7 +5,7 @@
 #include "image.hpp"
 #include "imagePPM.hpp"
 #include "visitor.hpp"
-int ***Image::MatrixMaker(int height, int width, int colors)
+int ***Image::MatrixMaker(const int height,const int width,const int colors)
 {
     int ***newColorMatrix = new int **[height];
     for (int i = 0; i < height; i++)

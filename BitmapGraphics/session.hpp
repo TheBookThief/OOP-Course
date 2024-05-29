@@ -30,7 +30,7 @@ class session
         /**
          * @brief Constructor which creates a session based on the initial images to be in it.
         */
-        session(std::vector<Image*> &_activeImages);
+        session(const std::vector<Image*> &_activeImages);
         /**
          * @brief Prints informations about the session and its images.
         */
@@ -48,15 +48,16 @@ class session
 */
 class sessionHandler
 {
+    private:
+        /**
+         * @brief ID of the session to which any transformation would be performed.
+        */
+        int activeSessionID;
     public:
         /**
          * @brief All started sessions in the current execution of the program.
         */
         std::vector<session*> activeSessions;
-        /**
-         * @brief ID of the session to which any transformation would be performed.
-        */
-        int activeSessionID;
         //void sendCommandToSession(command &_command);
         // void changeActiveSession(int newSessionNumber);
         /**
@@ -69,47 +70,47 @@ class sessionHandler
          * @brief General method for executing a command after it's read. It's purpose is 
          * to send it to the right method for actually performing the command.
         */
-        void executeCommand(command &_command);
+        void executeCommand(const command &_command);
         /**
          * @brief Executes the load command given by the user.
         */
-        void executeLoadCommand(command &currentCommand);
+        void executeLoadCommand(const command &currentCommand);
         /**
          * @brief Executes the save command given by the user.
         */
-        void executeSaveCommand(command &currentCommand);
+        void executeSaveCommand(const command &currentCommand);
         /**
          * @brief Executes the undo command given by the user.
         */
-        void executeUndoCommand(command &currentCommand);
+        void executeUndoCommand(const command &currentCommand);
         /**
          * @brief Executes the saveas command given by the user.
         */
-        void executeSaveAsCommand(command &currentCommand);
+        void executeSaveAsCommand(const command &currentCommand);
         /**
          * @brief Executes the add image command given by the user.
         */
-        void executeAddImageCommand(command &currentCommand);
+        void executeAddImageCommand(const command &currentCommand);
         /**
          * @brief Prints info about the active session.
         */
-        void executeSessionInfoCommand(command &currentCommand);
+        void executeSessionInfoCommand(const command &currentCommand);
         /**
          * @brief Changes the active session given by the user.
         */
-        void executeChangeActiveSessionCommand(command &currentCommand);
+        void executeChangeActiveSessionCommand(const command &currentCommand);
         /**
          * @brief Appends a transformation to the active session.
         */
-        void executeAddTransformationCommand(command &currentCommand);
+        void executeAddTransformationCommand(const command &currentCommand);
         /**
          * @brief Creates a collage using the inputted images.
         */
-        void executeMakeCollageCommand(command &currentCommand);
+        void executeMakeCollageCommand(const command &currentCommand);
         /**
          * @brief Prints the basics of all commands to the user.
         */
-        void executeHelpCommand(command &currentCommand);
+        void executeHelpCommand(const command &currentCommand);
         /**
          * @brief Erases all sessions and their respective images.
         */

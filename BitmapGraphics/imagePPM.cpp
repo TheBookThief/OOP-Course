@@ -3,7 +3,7 @@
 #include<vector>
 #include "imagePPM.hpp"
 #include "visitor.hpp"
-ImagePPM &ImagePPM::operator=(ImagePPM &_transformationImage)
+ImagePPM &ImagePPM::operator=(const ImagePPM &_transformationImage)
 {
     height = _transformationImage.height;
     width = _transformationImage.width;
