@@ -88,6 +88,8 @@ void Test6()
 }
 int main()
 {
+    Test6();
+    exit(0);
     sessionHandler* sessionHandlerWorker = new sessionHandler();
 
     while(1)

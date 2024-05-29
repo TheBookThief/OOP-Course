@@ -19,8 +19,11 @@ void readImage::VisitPGM(ImagePGM &objectImagePGM)
             throw std::runtime_error("File does not exist/can't be opened.");
         }
         in >> objectImagePGM.magicNumber >> objectImagePGM.width >> objectImagePGM.height >> objectImagePGM.maxColor;
-        std::cout << objectImagePGM.magicNumber << " " << objectImagePGM.width << " " << objectImagePGM.height << " " << objectImagePGM.maxColor << std::endl;
-
+        //std::cout << objectImagePGM.magicNumber << " " << objectImagePGM.width << " " << objectImagePGM.height << " " << objectImagePGM.maxColor << std::endl;
+        if(objectImagePGM.magicNumber != "P2" || sessionHandler::CommandReader::findExtension(objectImagePGM.filename) != "pgm")
+        {
+            throw std::runtime_error("Wrong file magic number/Wrong file extension.");
+        }
         objectImagePGM.colorMatrix = new int **[objectImagePGM.height];
         for (int i = 0; i < objectImagePGM.height; i++)
         {

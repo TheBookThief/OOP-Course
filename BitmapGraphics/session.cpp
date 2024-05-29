@@ -30,13 +30,6 @@ void session::printInfo(std::ostream &out)
         image->PrintDetails(out);
     }
 }
-// void session::appendCommand(command &command)
-// {
-//     for (Image *image : activeImages)
-//     {
-//         image->pendingCommands.push_back(command.clone());
-//     }
-// }
 session::~session()
 {
     for (Image *image : activeImages)
@@ -44,29 +37,9 @@ session::~session()
         delete image;
     }
 }
-
-// void sessionHandler::sendCommandToSession(command &_command)
-// {
-//     activeSessions[activeSessionID]->appendCommand(_command);
-// }
-// void sessionHandler::changeActiveSession(int newSessionNumber)
-// {
-//     try
-//     {
-//         if (newSessionNumber < activeSessions.size())
-//             activeSessionID = newSessionNumber;
-//         else
-//             throw std::out_of_range("Invalid session number");
-//     }
-//     catch(const std::exception& e)
-//     {
-//         std::cerr << e.what() << '\n';
-//     }
-// }
 void sessionHandler::createNewSession(std::vector<Image*> &initialImages, std::ostream &out)
 {
     session *newSession = new session(initialImages);
-    // std::cout<<"! "<<newSession->uniqueSessionID<<std::endl;
     activeSessionID = newSession->uniqueSessionID;
     activeSessions.push_back(newSession);
     newSession->printInfo(out);

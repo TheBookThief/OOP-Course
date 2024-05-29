@@ -19,8 +19,11 @@ void readImage::VisitPBM(ImagePBM &objectImagePBM)
             throw std::runtime_error("File does not exist/can't be opened.");
         }
         in >> objectImagePBM.magicNumber >> objectImagePBM.width >> objectImagePBM.height >> objectImagePBM.maxColor;
-        std::cout << objectImagePBM.magicNumber << " " << objectImagePBM.width << " " << objectImagePBM.height << " " << objectImagePBM.maxColor << std::endl;
-
+        //std::cout << objectImagePBM.magicNumber << " " << objectImagePBM.width << " " << objectImagePBM.height << " " << objectImagePBM.maxColor << std::endl;
+        if(objectImagePBM.magicNumber != "P1" || sessionHandler::CommandReader::findExtension(objectImagePBM.filename) != "pbm")
+        {
+            throw std::runtime_error("Wrong file magic number/Wrong file extension.");
+        }
         objectImagePBM.colorMatrix = new int **[objectImagePBM.height];
         for (int i = 0; i < objectImagePBM.height; i++)
         {

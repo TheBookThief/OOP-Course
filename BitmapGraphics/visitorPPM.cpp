@@ -27,8 +27,11 @@ void readImage::VisitPPM(ImagePPM &objectImagePPM)
             throw std::runtime_error("File does not exist/can't be opened.");
         }
         in >> objectImagePPM.magicNumber >> objectImagePPM.width >> objectImagePPM.height >> objectImagePPM.maxColor;
-        std::cout << objectImagePPM.magicNumber << " " << objectImagePPM.width << " " << objectImagePPM.height << " " << objectImagePPM.maxColor << std::endl;
-
+        //std::cout << objectImagePPM.magicNumber << " " << objectImagePPM.width << " " << objectImagePPM.height << " " << objectImagePPM.maxColor << std::endl;
+        if(objectImagePPM.magicNumber != "P3" || sessionHandler::CommandReader::findExtension(objectImagePPM.filename) != "ppm")
+        {
+            throw std::runtime_error("Wrong file magic number/Wrong file extension.");
+        }
         objectImagePPM.colorMatrix = new int **[objectImagePPM.height];
         for (int i = 0; i < objectImagePPM.height; i++)
         {
