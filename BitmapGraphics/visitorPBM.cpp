@@ -8,52 +8,45 @@
 #include "session.hpp"
 void readImage::VisitPBM(ImagePBM &objectImagePBM)
 {
-    try
+    std::ifstream in;
+    objectImagePBM.filename = inputFileName;
+    objectImagePBM.colors = 1;
+    in.open(objectImagePBM.filename);
+    if (!in.is_open())
     {
-        std::ifstream in;
-        objectImagePBM.filename = inputFileName;
-        objectImagePBM.colors = 1;
-        in.open(objectImagePBM.filename);
-        if (!in.is_open())
+        throw std::runtime_error("File does not exist/can't be opened.");
+    }
+    in >> objectImagePBM.magicNumber >> objectImagePBM.width >> objectImagePBM.height >> objectImagePBM.maxColor;
+    // std::cout << objectImagePBM.magicNumber << " " << objectImagePBM.width << " " << objectImagePBM.height << " " << objectImagePBM.maxColor << std::endl;
+    if (objectImagePBM.magicNumber != "P1" || sessionHandler::CommandReader::findExtension(objectImagePBM.filename) != "pbm")
+    {
+        throw std::runtime_error("Wrong file magic number/Wrong file extension.");
+    }
+    objectImagePBM.colorMatrix = new int **[objectImagePBM.height];
+    for (int i = 0; i < objectImagePBM.height; i++)
+    {
+        objectImagePBM.colorMatrix[i] = new int *[objectImagePBM.width];
+    }
+    for (int i = 0; i < objectImagePBM.height; i++)
+    {
+        for (int j = 0; j < objectImagePBM.width; j++)
         {
-            throw std::runtime_error("File does not exist/can't be opened.");
+            objectImagePBM.colorMatrix[i][j] = new int[objectImagePBM.colors];
         }
-        in >> objectImagePBM.magicNumber >> objectImagePBM.width >> objectImagePBM.height >> objectImagePBM.maxColor;
-        //std::cout << objectImagePBM.magicNumber << " " << objectImagePBM.width << " " << objectImagePBM.height << " " << objectImagePBM.maxColor << std::endl;
-        if(objectImagePBM.magicNumber != "P1" || sessionHandler::CommandReader::findExtension(objectImagePBM.filename) != "pbm")
+    }
+    int colorChannelValue = 0;
+    for (int i = 0; i < objectImagePBM.height; i++)
+    {
+        for (int j = 0; j < objectImagePBM.width; j++)
         {
-            throw std::runtime_error("Wrong file magic number/Wrong file extension.");
-        }
-        objectImagePBM.colorMatrix = new int **[objectImagePBM.height];
-        for (int i = 0; i < objectImagePBM.height; i++)
-        {
-            objectImagePBM.colorMatrix[i] = new int *[objectImagePBM.width];
-        }
-        for (int i = 0; i < objectImagePBM.height; i++)
-        {
-            for (int j = 0; j < objectImagePBM.width; j++)
+            for (int p = 0; p < objectImagePBM.colors; p++)
             {
-                objectImagePBM.colorMatrix[i][j] = new int[objectImagePBM.colors];
+                in >> colorChannelValue;
+                objectImagePBM.colorMatrix[i][j][p] = colorChannelValue;
             }
         }
-        int colorChannelValue = 0;
-        for (int i = 0; i < objectImagePBM.height; i++)
-        {
-            for (int j = 0; j < objectImagePBM.width; j++)
-            {
-                for (int p = 0; p < objectImagePBM.colors; p++)
-                {
-                    in >> colorChannelValue;
-                    objectImagePBM.colorMatrix[i][j][p] = colorChannelValue;
-                }
-            }
-        }
-        in.close();
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    in.close();
 }
 void grayscale::VisitPBM(ImagePBM &objectImagePBM)
 {

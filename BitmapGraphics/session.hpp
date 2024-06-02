@@ -69,8 +69,9 @@ class sessionHandler
         /**
          * @brief General method for executing a command after it's read. It's purpose is 
          * to send it to the right method for actually performing the command.
+         * @return Status of program after completing command 1 - continue executing command, 0 - marks end of program
         */
-        void executeCommand(const command &_command);
+        int executeCommand(const command &_command);
         /**
          * @brief Executes the load command given by the user.
         */

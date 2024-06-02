@@ -16,52 +16,45 @@ saveAsImage::saveAsImage(std::string _newFilename)
 }
 void readImage::VisitPPM(ImagePPM &objectImagePPM)
 {
-    try
+    std::ifstream in;
+    objectImagePPM.filename = inputFileName;
+    objectImagePPM.colors = 3;
+    in.open(objectImagePPM.filename);
+    if (!in.is_open())
     {
-        std::ifstream in;
-        objectImagePPM.filename = inputFileName;
-        objectImagePPM.colors = 3;
-        in.open(objectImagePPM.filename);
-        if (!in.is_open())
+        throw std::runtime_error("File does not exist/can't be opened.");
+    }
+    in >> objectImagePPM.magicNumber >> objectImagePPM.width >> objectImagePPM.height >> objectImagePPM.maxColor;
+    // std::cout << objectImagePPM.magicNumber << " " << objectImagePPM.width << " " << objectImagePPM.height << " " << objectImagePPM.maxColor << std::endl;
+    if (objectImagePPM.magicNumber != "P3" || sessionHandler::CommandReader::findExtension(objectImagePPM.filename) != "ppm")
+    {
+        throw std::runtime_error("Wrong file magic number/Wrong file extension.");
+    }
+    objectImagePPM.colorMatrix = new int **[objectImagePPM.height];
+    for (int i = 0; i < objectImagePPM.height; i++)
+    {
+        objectImagePPM.colorMatrix[i] = new int *[objectImagePPM.width];
+    }
+    for (int i = 0; i < objectImagePPM.height; i++)
+    {
+        for (int j = 0; j < objectImagePPM.width; j++)
         {
-            throw std::runtime_error("File does not exist/can't be opened.");
+            objectImagePPM.colorMatrix[i][j] = new int[objectImagePPM.colors];
         }
-        in >> objectImagePPM.magicNumber >> objectImagePPM.width >> objectImagePPM.height >> objectImagePPM.maxColor;
-        //std::cout << objectImagePPM.magicNumber << " " << objectImagePPM.width << " " << objectImagePPM.height << " " << objectImagePPM.maxColor << std::endl;
-        if(objectImagePPM.magicNumber != "P3" || sessionHandler::CommandReader::findExtension(objectImagePPM.filename) != "ppm")
+    }
+    int colorChannelValue = 0;
+    for (int i = 0; i < objectImagePPM.height; i++)
+    {
+        for (int j = 0; j < objectImagePPM.width; j++)
         {
-            throw std::runtime_error("Wrong file magic number/Wrong file extension.");
-        }
-        objectImagePPM.colorMatrix = new int **[objectImagePPM.height];
-        for (int i = 0; i < objectImagePPM.height; i++)
-        {
-            objectImagePPM.colorMatrix[i] = new int *[objectImagePPM.width];
-        }
-        for (int i = 0; i < objectImagePPM.height; i++)
-        {
-            for (int j = 0; j < objectImagePPM.width; j++)
+            for (int p = 0; p < objectImagePPM.colors; p++)
             {
-                objectImagePPM.colorMatrix[i][j] = new int[objectImagePPM.colors];
+                in >> colorChannelValue;
+                objectImagePPM.colorMatrix[i][j][p] = colorChannelValue;
             }
         }
-        int colorChannelValue = 0;
-        for (int i = 0; i < objectImagePPM.height; i++)
-        {
-            for (int j = 0; j < objectImagePPM.width; j++)
-            {
-                for (int p = 0; p < objectImagePPM.colors; p++)
-                {
-                    in >> colorChannelValue;
-                    objectImagePPM.colorMatrix[i][j][p] = colorChannelValue;
-                }
-            }
-        }
-        in.close();
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    in.close();
 }
 void grayscale::VisitPPM(ImagePPM &objectImagePPM)
 {

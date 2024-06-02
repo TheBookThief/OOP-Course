@@ -106,24 +106,50 @@ void sessionHandler::executeLoadCommand(const command &currentCommand)
             {
                 ImagePPM *newImagePPM = new ImagePPM();
                 readImage *PPMImageReader = new readImage(filename);
-                newImagePPM->AcceptVisitor(PPMImageReader);
-                inputImages.push_back(newImagePPM);
+                try
+                {
+                    newImagePPM->AcceptVisitor(PPMImageReader);
+                    inputImages.push_back(newImagePPM);
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << '\n';
+                    delete PPMImageReader;
+                }
                 delete PPMImageReader;
             }
             else if (fileExtension == "pgm")
             {
                 ImagePGM *newImagePGM = new ImagePGM();
                 readImage *PGMImageReader = new readImage(filename);
-                newImagePGM->AcceptVisitor(PGMImageReader);
-                inputImages.push_back(newImagePGM);
+                try
+                {
+                    newImagePGM->AcceptVisitor(PGMImageReader);
+                    inputImages.push_back(newImagePGM);
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << '\n';
+                    delete PGMImageReader;
+                    return;
+                }
                 delete PGMImageReader;
             }
             else if (fileExtension == "pbm")
             {
                 ImagePBM *newImagePBM = new ImagePBM();
                 readImage *PBMImageReader = new readImage(filename);
-                newImagePBM->AcceptVisitor(PBMImageReader);
-                inputImages.push_back(newImagePBM);
+                try
+                {
+                    newImagePBM->AcceptVisitor(PBMImageReader);
+                    inputImages.push_back(newImagePBM);
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << '\n';
+                    delete PBMImageReader;
+                    return;
+                }
                 delete PBMImageReader;
             }
             else
@@ -286,20 +312,44 @@ void sessionHandler::executeAddImageCommand(const command &currentCommand)
         if(fileExtension == "ppm")
         {
             ImagePPM* newImage = new ImagePPM();
-            readImageMaker->VisitPPM(*newImage);
-            activeSessions[activeSessionID]->activeImages.push_back(newImage);
+            try
+            {
+                readImageMaker->VisitPPM(*newImage);
+                activeSessions[activeSessionID]->activeImages.push_back(newImage);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+                return;
+            }
         }
         else if(fileExtension == "pgm")
         {
             ImagePGM* newImage = new ImagePGM();
-            readImageMaker->VisitPGM(*newImage);
-            activeSessions[activeSessionID]->activeImages.push_back(newImage);
+            try
+            {
+                readImageMaker->VisitPGM(*newImage);
+                activeSessions[activeSessionID]->activeImages.push_back(newImage);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+                return;
+            }
         }
         else if(fileExtension == "pbm")
         {
             ImagePBM* newImage = new ImagePBM();
-            readImageMaker->VisitPBM(*newImage);
-            activeSessions[activeSessionID]->activeImages.push_back(newImage);
+            try
+            {
+                readImageMaker->VisitPBM(*newImage);
+                activeSessions[activeSessionID]->activeImages.push_back(newImage);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+                return;
+            }
         }
         else
         {
@@ -350,6 +400,19 @@ void sessionHandler::executeChangeActiveSessionCommand(const command &currentCom
 }
 void sessionHandler::executeSessionInfoCommand(const command &currentCommand)
 {
+    try
+    {
+        if(activeSessions.size() == 0)
+        {
+            throw std::runtime_error("No active sessions.");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return;
+    }
+    
     activeSessions[activeSessionID]->printInfo();
 }
 void sessionHandler::executeAddTransformationCommand(const command &currentCommand)
@@ -461,7 +524,7 @@ void sessionHandler::executeMakeCollageCommand(const command &currentCommand)
     }
 
 }
-void sessionHandler::executeCommand(const command &currentCommand)
+int sessionHandler::executeCommand(const command &currentCommand)
 {
     try
     {
@@ -509,17 +572,18 @@ void sessionHandler::executeCommand(const command &currentCommand)
         }
         else if(commandName == "close")
         {
-            exit(0);
+            return 0;
         }
         else
         {
             throw std::logic_error("Invalid command");
-            return;
         }
+        return 1;
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
+        return 2;
     }
 }
 void sessionHandler::executeHelpCommand(const command &currentCommand)
@@ -544,11 +608,11 @@ void sessionHandler::executeHelpCommand(const command &currentCommand)
         for(auto x: helpMaker)
         {
             std::cout<<x.first;
-            for(int i=0; i<10-x.first.size(); i++)
+            for(int i=0; i<50-x.first.size(); i++)
             {
                 std::cout<<" ";
             }
-            std::cout<<x.second;
+            std::cout<<x.second<<std::endl;
         }
     }
     catch(const std::exception& e)
